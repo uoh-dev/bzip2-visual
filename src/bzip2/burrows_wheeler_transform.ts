@@ -1,15 +1,18 @@
 type SuffixTree = Map<string, SuffixTree>;
 
+// TODO reserve \x02 and \x03 or similar for control characters.
+
 export function suffix_tree(input: string): SuffixTree {
     const stree: SuffixTree = new Map();
-    const reverse_input = input.split("").reverse().join("");
-    for (let i = reverse_input.length; i > 0; i--) {
-        const suffix = reverse_input.slice(i);
-        for (const char of reverse_input) {
-            console.log(char);
-            let subtree = stree;
-            while (subtree.has(char)) subtree = subtree.get(char);
-            subtree.set(char, new Map());
+    for (let i = input.length - 1; i >= 0; i--) {
+        let subtree = stree;
+        const suffix = input.slice(i);
+        console.log(suffix);
+        for (const char of suffix) {
+            if (!subtree.has(char)) {
+                subtree.set(char, new Map());
+            }
+            subtree = subtree.get(char);
         }
     }
     return stree;

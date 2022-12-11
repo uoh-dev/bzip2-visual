@@ -3,5 +3,4 @@ import { run_length_enc } from "./bzip2/run_length_enc";
 
 const s = "333eas";
 const t = suffix_tree(s);
-console.log(t.get("s"));
-console.log(t.get("s").get("a"));
+console.log(t);
