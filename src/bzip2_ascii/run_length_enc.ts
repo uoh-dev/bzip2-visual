@@ -3,7 +3,7 @@ export function run_length_enc(input: string): string {
     let run_value;
     let counter = 0;
     for (const char of input) {
-        if (char === run_value && counter < 0xFFFF_FFFF) {
+        if (char === run_value && counter < 0xFF) {
             counter++;
             continue;
         }
@@ -11,7 +11,7 @@ export function run_length_enc(input: string): string {
         counter = 1;
         run_value = char;
     }
-    out.shift();
+    out.shift();    
     out.push(String.fromCharCode(counter) + run_value);
     return out.join("");
 }

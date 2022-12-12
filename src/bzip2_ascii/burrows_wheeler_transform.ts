@@ -42,8 +42,10 @@ export function suffix_array(stree: SuffixTree): number[] {
 }
 
 export function burrows_wheeler_transform(input: string): string {
-    const utf32 = input.split("").map(char => char.codePointAt(0));
-    utf32.push(END);
-    const out = Array(utf32.length);
-    return input;
+    const res_utf32 = Array(input.length + 1);
+    const suffix_arr = suffix_array(suffix_tree(input));
+    for (let i = 0; i <= input.length; i++) {
+        res_utf32[i] = suffix_arr[i] > 0 ? input[suffix_arr[i] - 1].codePointAt(0) : END;
+    }
+    return res_utf32.map(utf => String.fromCodePoint(utf)).join("");
 }
