@@ -1,16 +1,12 @@
 export class LinkedList<T> {
-    private head: LinkedListNode<T>;
-    private tail: LinkedListNode<T>;
+    private head: LinkedListNode<T> | null;
+    private tail: LinkedListNode<T> | null;
     private _size: number;
 
-    constructor(data: T) {
-        this.head = {
-            previous: null,
-            data,
-            next: null
-        };
-        this.tail = this.head;
-        this._size = 1;
+    constructor() {
+        this.head = null;
+        this.tail = null;
+        this._size = 0;
     }
 
     at(i: number): T {
@@ -28,7 +24,18 @@ export class LinkedList<T> {
         } while (node = node.next);
     }
 
+    private _init(data: T): void {
+        this.head = {
+            previous: null,
+            data,
+            next: null
+        };
+        this.tail = this.head;
+        this._size = 1;
+    }
+
     prepend(data: T): void {
+        if (!this.head) return this._init(data);
         this.head.previous = {
             previous: null,
             data,
@@ -39,6 +46,7 @@ export class LinkedList<T> {
     }
 
     append(data: T): void {
+        if (!this.tail) return this._init(data);
         this.tail.next = {
             previous: this.tail,
             data,

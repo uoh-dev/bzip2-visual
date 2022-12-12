@@ -1,8 +1,8 @@
 import { LinkedList } from "../class/LinkedList";
 
 export function move_to_front_enc(input: string): string {
-    const ascii_list: LinkedList<string> = new LinkedList(String.fromCharCode(0));
-    for (let i = 1; i < 0x100; i++) {
+    const ascii_list: LinkedList<string> = new LinkedList();
+    for (let i = 0; i < 0x100; i++) {
         ascii_list.append(String.fromCharCode(i));
     }
     const out: string[] = Array(input.length);
