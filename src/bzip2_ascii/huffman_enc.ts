@@ -11,7 +11,7 @@ export function huffman_tree(input: string): BinNode<{ code?: number, count: num
     const counters: number[] = Array(256).fill(0);
     for (const char of input) counters[char.codePointAt(0)]++;
     const heap = new MinHeap<BinNode<{ code?: number, count: number }>>(x => x.data.count);
-    heap.insert(...counters.filter(count => count > 0).map((count, code) => ({
+    heap.insert(...counters.map((count, code) => ({
         parent: null,
         left_child: null,
         right_child: null,
@@ -19,8 +19,7 @@ export function huffman_tree(input: string): BinNode<{ code?: number, count: num
             count,
             code
         }
-    })));
-    console.log(heap);
+    })).filter(({ data }) => data.count > 0));
     let node1, node2;
     while ((node1 = heap.pop()) && (node2 = heap.pop())) {
         const node: BinNode<{ code?: number, count: number }> = {
@@ -33,6 +32,7 @@ export function huffman_tree(input: string): BinNode<{ code?: number, count: num
         }
         node1.parent = node;
         node2.parent = node;
+        heap.insert(node);
     }
     return node1;
 }
