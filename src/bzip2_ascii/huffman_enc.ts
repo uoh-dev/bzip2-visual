@@ -36,3 +36,35 @@ export function huffman_tree(input: string): BinNode<{ code?: number, count: num
     }
     return node1;
 }
+
+export function canonical_huffman_table(input: string): Map<number, string> {
+    const tree = huffman_tree(input);
+    const encoding: { code: number, encoding: string }[] = [];
+    const stack: { partial_code: string[], node: BinNode<{ code?: number, count: number }> }[] = [{
+        partial_code: [],
+        node: tree
+    }];
+    let stack_el;
+    while (stack_el = stack.pop()) {
+        const { partial_code, node } = stack_el;
+        if (node.data.code) {
+            encoding.push({ code: node.data.code, encoding: partial_code.join("") });
+            continue;
+        }
+        stack.push({ partial_code: partial_code.concat(["0"]), node: node.left_child });
+        stack.push({ partial_code: partial_code.concat(["1"]), node: node.right_child });
+    }
+    encoding.sort(({ code, encoding }, { code: code2, encoding: encoding2 }) =>
+        encoding.length === encoding2.length ?
+        code - code2 :
+        encoding.length - encoding2.length
+    );
+    const canonical_encoding = new Map<number, string>();
+    let enc_value = 0;
+    for (const enc of encoding) {
+        const canonical = enc_value.toString(2).padEnd(enc.encoding.length, "0");
+        canonical_encoding.set(enc.code, canonical);
+        enc_value = parseInt(canonical, 2) + 1;
+    }
+    return canonical_encoding;
+}
