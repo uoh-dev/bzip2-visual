@@ -1,4 +1,4 @@
-import { canonical_huffman_table, huffman_enc, huffman_tree } from "./bzip2_ascii/huffman_enc";
+import { canonical_huffman_table, huffman_enc, huffman_tree } from "./bzip2_enc/huffman_enc";
 import { MinHeap } from "./class/MinHeap";
 
 const encoding = huffman_enc("aaaaaaaaaabcccccccccccccccddddddd");
