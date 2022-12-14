@@ -37,7 +37,8 @@ export function huffman_tree(input: string): BinNode<{ code?: number, count: num
     return node1;
 }
 
-export function canonical_huffman_table(input: string): Map<number, string> {
+// TODO: rename variables & tidy up a bit.
+export function canonical_huffman_table(input: string): Map<number, number> {
     const tree = huffman_tree(input);
     const encoding: { code: number, encoding: string }[] = [];
     const stack: { partial_code: string[], node: BinNode<{ code?: number, count: number }> }[] = [{
@@ -59,12 +60,25 @@ export function canonical_huffman_table(input: string): Map<number, string> {
         code - code2 :
         encoding.length - encoding2.length
     );
-    const canonical_encoding = new Map<number, string>();
+    const canonical_encoding = new Map<number, number>();
     let enc_value = 0;
     for (const enc of encoding) {
-        const canonical = enc_value.toString(2).padEnd(enc.encoding.length, "0");
+        const canonical = parseInt(enc_value.toString(2).padEnd(enc.encoding.length, "0"), 2);
         canonical_encoding.set(enc.code, canonical);
-        enc_value = parseInt(canonical, 2) + 1;
+        enc_value = canonical + 1;
     }
     return canonical_encoding;
+}
+
+export function huffman_enc(input: string): string {
+    const ascii_arr: number[] = [];
+    const table = canonical_huffman_table(input);
+    // TODO: explore saving space here.
+    for (let i = 0; i < 0x100; i++) {
+        ascii_arr.push(table.get(i)?.toString(2).length ?? 0);
+    }
+    for (const char of input) {
+        ascii_arr.push(table.get(char.charCodeAt(0)));
+    }
+    return ascii_arr.map(ascii => String.fromCharCode(ascii)).join("");
 }
