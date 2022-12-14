@@ -71,6 +71,7 @@ export function canonical_huffman_table(input: string): Map<number, number> {
 }
 
 export function huffman_enc(input: string): string {
+    const out_arr: string[] = [];
     const ascii_arr: number[] = [];
     const table = canonical_huffman_table(input);
     // TODO: explore saving space here.
@@ -78,7 +79,12 @@ export function huffman_enc(input: string): string {
         ascii_arr.push(table.get(i)?.toString(2).length ?? 0);
     }
     for (const char of input) {
-        ascii_arr.push(table.get(char.charCodeAt(0)));
+        out_arr.push(table.get(char.charCodeAt(0)).toString(2));
+    }
+    const out = out_arr.join("");
+    for (let i = 0; i < out.length; i += 8) {
+        // TODO: padding at the end should be prevented from being misinterpreted as data.
+        ascii_arr.push(parseInt(out.slice(i, i + 8).padEnd(8, "0"), 2));
     }
     return ascii_arr.map(ascii => String.fromCharCode(ascii)).join("");
 }
