@@ -1,5 +1,6 @@
-import { canonical_huffman_table, huffman_enc, huffman_tree } from "./bzip2_enc/huffman_enc";
-import { MinHeap } from "./class/MinHeap";
+import { run_length_dec } from "./bzip2_dec/run_length_dec";
+import { run_length_enc } from "./bzip2_enc/run_length_enc";
 
-const encoding = huffman_enc("aaaaaaaaaabcccccccccccccccddddddd");
-for (const char of encoding) console.log(`${char.charCodeAt(0)} (${char.charCodeAt(0).toString(2).padStart(8, "0")})`);
+const encoded = run_length_enc("\x00 abcdef");
+const decoded = run_length_dec(encoded);
+console.log("\x00 abcdef" === decoded);

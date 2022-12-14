@@ -15,3 +15,4 @@ export function run_length_enc(input: string): string {
     out.push(String.fromCharCode(counter) + run_value);
     return out.join("");
 }
+    
