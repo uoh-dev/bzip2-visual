@@ -8,7 +8,6 @@ export function move_to_front_enc(input: string): string {
     const out: string[] = Array(input.length);
     for (let i = 0; i < input.length; i++) {
         const index = ascii_list.indexOf(input[i]);
-        console.log(`${input[i]}: index ${index}`);
         out[i] = String.fromCharCode(index);
         ascii_list.remove(index);
         ascii_list.prepend(input[i]);

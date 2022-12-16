@@ -56,7 +56,23 @@ export class LinkedList<T> {
         this._size++;
     }
 
+    insert(data: T, i: number): void {
+        let node = this.head;
+        while (i-- > 0) {
+            node = node.next;
+        }
+        const newnode: LinkedListNode<T> = {
+            previous: node.previous,
+            data,
+            next: node
+        };
+        node.previous.next = newnode;
+        node.previous = newnode;
+    }
+
     remove(i: number): void {
+        if (i === 0) return this.remove_head();
+        if (i === this._size - 1) return this.remove_tail();
         let node = this.head;
         while (i-- > 0) {
             node = node.next;
@@ -65,6 +81,22 @@ export class LinkedList<T> {
         if (node.next) node.next.previous = node.previous;
         if (node.previous) node.previous.next = node.next;
         this._size--;
+    }
+
+    remove_head(): void {
+        if (!this.head) return;
+        this.head = this.head.next;
+        this._size--;
+        if (!this.head) return;
+        this.head.previous = null;
+    }
+
+    remove_tail(): void {
+        if (!this.tail) return;
+        this.tail = this.tail.previous;
+        this._size--;
+        if (!this.tail) return;
+        this.tail.next = null;
     }
 
     toArray(): T[] {
