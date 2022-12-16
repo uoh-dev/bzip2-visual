@@ -9,7 +9,7 @@ export function move_to_front_dec(input: string): string {
     for (let i = enc_input.length - 1; i >= 0; i--) {
         const prev_index = enc_input[i];
         const char = ascii_list.at(0);
-        ascii_list.remove(0);
+        ascii_list.remove_head();
         ascii_list.insert(char, prev_index);
         dec_input_arr[i] = char;
     }

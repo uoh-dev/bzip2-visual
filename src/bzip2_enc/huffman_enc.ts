@@ -37,7 +37,6 @@ export function huffman_tree(input: string): BinNode<{ code?: number, count: num
     return node1;
 }
 
-// TODO: rename variables & tidy up a bit.
 export function canonical_huffman_table(input: string): Map<number, number> {
     const tree = huffman_tree(input);
     const encoding: { code: number, encoding: string }[] = [];
@@ -83,8 +82,11 @@ export function huffman_enc(input: string): string {
     }
     const out = out_arr.join("");
     for (let i = 0; i < out.length; i += 8) {
-        // TODO: padding at the end should be prevented from being misinterpreted as data.
-        ascii_arr.push(parseInt(out.slice(i, i + 8).padEnd(8, "0"), 2));
+        ascii_arr.push(parseInt(out.slice(i, i + 8), 2));
     }
+    const last_byte = ascii_arr[ascii_arr.length - 1].toString(2);
+    // TODO: encode useless-byte as just 3 bits instead of an entire byte (only up to 7 needed).
+    ascii_arr.push(8 - last_byte.length);
+    ascii_arr[ascii_arr.length - 2] = parseInt(last_byte.padEnd(8, "0"), 2);
     return ascii_arr.map(ascii => String.fromCharCode(ascii)).join("");
 }
