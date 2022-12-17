@@ -1,6 +1,6 @@
 import { MinHeap } from "../class/MinHeap";
 
-type BinNode<T> = {
+export type BinNode<T> = {
     parent: BinNode<T> | null;
     left_child: BinNode<T> | null;
     right_child: BinNode<T> | null;
@@ -56,8 +56,8 @@ export function canonical_huffman_table(input: string): Map<number, number> {
     }
     encoding.sort(({ code, encoding }, { code: code2, encoding: encoding2 }) =>
         encoding.length === encoding2.length ?
-        code - code2 :
-        encoding.length - encoding2.length
+            code - code2 :
+            encoding.length - encoding2.length
     );
     const canonical_encoding = new Map<number, number>();
     let enc_value = 0;
