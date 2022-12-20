@@ -53,6 +53,11 @@ export function burrows_wheeler_transform(input: string): string {
         }
         ascii_arr[i - (!!$_ptr as any)] = input[suffix_arr[i] - 1].codePointAt(0);
     }
-    // TODO: get the $_ptr into the encoding in a way that it is retrievable when decoding.
+    $_ptr = $_ptr.toString(2);
+    const $_ptr_arr = [];
+    for (let i = 0; i < $_ptr.length; i += 4) {
+        $_ptr_arr.push(parseInt($_ptr.slice(i, i + 4).split("").map(char => "0" + char).join("").padEnd(8, "1"), 2));
+    }
+    if ($_ptr_arr.at(-1) ^ 0x02) $_ptr_arr.push(0xFF);
     return ascii_arr.map(ascii => String.fromCodePoint(ascii)).join("");
 }
