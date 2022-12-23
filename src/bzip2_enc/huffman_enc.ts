@@ -85,7 +85,6 @@ export function huffman_enc(input: string): string {
         ascii_arr.push(parseInt(out.slice(i, i + 8), 2));
     }
     const last_byte = ascii_arr[ascii_arr.length - 1].toString(2);
-    // TODO: encode useless-byte as just 3 bits instead of an entire byte (only up to 7 needed).
     ascii_arr.push(8 - last_byte.length);
     ascii_arr[ascii_arr.length - 2] = parseInt(last_byte.padEnd(8, "0"), 2);
     return ascii_arr.map(ascii => String.fromCharCode(ascii)).join("");
