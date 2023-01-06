@@ -1,0 +1,14 @@
+body {
+    --bg: #fff;
+    --bg-accent: rgb(20, 80, 160);
+    --fg: #000;
+
+    background-color: var(--bg);
+}
+
+.nav {
+    background-color: var(--bg-accent);
+}
+
+
+/* body.alt {} */

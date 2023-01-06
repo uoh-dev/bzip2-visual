@@ -2,13 +2,14 @@ import * as cytoscape from 'cytoscape';
 import { huffman_tree, BinNode } from "../bzip2_enc/huffman_enc";
 import { MinHeap } from '../class/MinHeap';
 
-export function show_tree() {
+export function show_tree(element: string) {
     let dagre = require('cytoscape-dagre');
     cytoscape.use(dagre);
 
     // --------- Colors ---------
 
-    let accent_color = "#FFF"
+    let background_color = "#fff"
+    let foreground_color = "#000"
 
     // --------- Colors ---------
 
@@ -80,7 +81,7 @@ export function show_tree() {
 
     let cy = undefined;
     cy = cytoscape({
-        container: document.getElementById('cy'), // container to render in
+        container: document.getElementById(element), // container to render in
 
         autoungrabify: true,
         autounselectify: true,
@@ -92,14 +93,14 @@ export function show_tree() {
             {
                 selector: 'node',
                 style: {
-                    'background-color': accent_color,
+                    'background-color': background_color,
                     'label': 'data(label)',
                     'text-valign': 'center',
                     'text-halign': 'center',
                     "text-margin-y": 18,
                     'text-wrap': "wrap",
                     "border-width": 2,
-                    "border-color": '#000'
+                    "border-color": foreground_color,
                 },
             },
 
@@ -107,8 +108,8 @@ export function show_tree() {
                 selector: 'edge',
                 style: {
                     'width': 3,
-                    'line-color': '#ccc',
-                    'target-arrow-color': '#ccc',
+                    'line-color': foreground_color,
+                    'target-arrow-color': foreground_color,
                     'target-arrow-shape': 'triangle',
                     'curve-style': 'bezier'
                 }
