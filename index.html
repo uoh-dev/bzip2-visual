@@ -11,7 +11,8 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark nav px-5">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark nav px-5 sticky-top">
         <div class="container-fluid">
             <a class="navbar-brand px-5" href="#">Bzip2</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -30,28 +31,35 @@
             </div>
         </div>
     </nav>
+
+    <!-- Main body -->
     <div class=" row">
 
-
+        <!-- Left sidebar -->
         <div class="col-3">
         </div>
 
+        <!-- Inner body -->
         <div class=" col-6">
-
             <div class="row justify-content-center align-items-center" style="margin-top: 20%;">
+
+                <!-- Textarea for text to encode -->
                 <div class="col-5">
                     <p class="fs-4">Enter text to encode with bzip2:</p>
                     <textarea class="form-control" rows="10" id="textareaNotEnc"></textarea>
+                    <span style="float: right;" id="spanCountLetters">0</span>
                 </div>
                 <div class="col-2 text-center">
                     <p class="fs-2">or</p>
                 </div>
+
+                <!-- Button to browse for textfile to encode -->
                 <div class="col-5 content text-center">
                     <input type="file" class="form-control">
                 </div>
             </div>
 
-
+            <!-- Input forms to start encoding -->
             <div class="d-flex justify-content-center align-items-center" style="margin-top:15%">
                 <button id="buttonEncode" type="button" class="btn btn-primary btn-lg mx-3" disabled>Encode</button>
 
@@ -60,18 +68,96 @@
                     Encode Text visually (under 30 characters)
                 </label>
             </div>
-
-
-            <!-- 
-            <div id="tree-control">
-                <input type="range" min="1" max="100" value="50" class="slider">
-            </div>
-            <div id="cy" style="width: 100%; height: 500px; border-style: solid;"></div>  -->
         </div>
-
-
+        <!-- Right sidebar -->
         <div class="col-3"></div>
     </div>
+
+    <!-- Burrows Wheeler transform row -->
+    <div id="divBWT" class="mb-5" style=" display: none;">
+        <div id="rowBWT" class="row" style="margin-top: 10%; margin-left: 8%; margin-right: 8%;">
+            <span class="fs-2 fw-bold  text-center pb-4">Burrows-Wheeler-Transform</span>
+            <span class="text-center fs-5 pb-3" id="spanOriginalText"></span>
+
+            <!-- Explaination of BWT -->
+            <div class="col-6 p-5" style="height: 620px;">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Scio enim esse quosdam, qui quavis lingua
+                philosophari possint; Audeo dicere, inquit. Confecta res esset. Duo Reges: constructio interrete. Qua ex
+                cognitione facilior facta est investigatio rerum occultissimarum.
+
+                Haec dicuntur inconstantissime. Qui-vere falsone, quaerere mittimus-dicitur oculis se privasse; Quid, si
+                non
+                sensus modo ei sit datus, verum etiam animus hominis? Nam illud vehementer repugnat, eundem beatum esse
+                et
+                multis malis oppressum. Sit enim idem caecus, debilis. Unum nescio, quo modo possit, si luxuriosus sit,
+                finitas cupiditates habere. Laboro autem non sine causa;
+
+                Sed non sunt in eo genere tantae commoditates corporis tamque productae temporibus tamque multae. Nihil
+                opus
+                est exemplis hoc facere longius. Utinam quidem dicerent alium alio beatiorem! Iam ruinas videres. In eo
+                enim
+                positum est id, quod dicimus esse expetendum. Nulla profecto est, quin suam vim retineat a primo ad
+                extremum.
+
+                Dolere malum est: in crucem qui agitur, beatus esse non potest. Venit ad extremum; Minime vero istorum
+                quidem, inquit. Sed quanta sit alias, nunc tantum possitne esse tanta. Aliter homines, aliter
+                philosophos
+                loqui putas oportere? Sapiens autem semper beatus est et est aliquando in dolore; Sed quid attinet de
+                rebus
+                tam apertis plura requirere?
+                <div class="text-center pt-5 fs-3" id="divBWTResult">
+                    Result: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+                </div>
+            </div>
+
+            <!-- Text transformations -->
+            <div class="col-6">
+                <div class="row">
+                    <div class="col-4 lh-sm font-monospace p-4" style="height: 620px; font-size:13.5px;">
+                        Text rotations:<br><br>
+                        aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa<br>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa<br>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa<br>
+                        aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa<br>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa<br>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa<br>
+                        aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa<br>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa<br>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa<br>
+                        aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa<br>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa<br>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa<br>
+                        aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa<br>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa<br>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa<br>
+                        aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa<br>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa<br>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa<br>
+                        aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa<br>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa<br>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa<br>
+                        aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa<br>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa<br>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa<br>
+                        aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa<br>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa<br>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa<br>
+                        aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa<br>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa<br>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa<br>
+                    </div>
+                    <div class="col-1"></div>
+
+                    <div class="col-4 lh-sm font-monospace p-4" style="height: 620px; font-size:13.5px;">
+                        Sorted rotations:<br><br>
+                        aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa<br>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa<br>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa<br>
+                        aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa<br>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa<br>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa<br>
+                        aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa<br>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa<br>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa<br>
+                        aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa<br>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa<br>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa<br>
+                        aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa<br>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa<br>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa<br>
+                        aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa<br>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa<br>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa<br>
+                        aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa<br>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa<br>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa<br>
+                        aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa<br>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa<br>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa<br>
+                        aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa<br>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa<br>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa<br>
+                        aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa<br>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa<br>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa<br>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-center">
+            <button id="buttonNextTODO" type="button" class="d-flex btn btn-primary btn-lg mx-3 text-center">
+                Continue
+            </button>
+        </div>
+
+    </div>
+    <!-- 
+        <div id="tree-control">
+            <input type="range" min="1" max="100" value="50" class="slider">
+        </div>
+        <div id="cy" style="width: 100%; height: 500px; border-style: solid;"></div>  
+    -->
     <div id="app"></div>
     <!-- <div id="cy" style="width: 1000px; height: 1000px;"></div> -->
 </body>
